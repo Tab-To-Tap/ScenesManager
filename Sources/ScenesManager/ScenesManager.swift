@@ -241,7 +241,7 @@ import OSLog
     /// - Note: This method checks the current window state and handles transitions appropriately
     @MainActor
     public func openWindow(_ scene: SceneId) {
-        guard let openWindow = openWindow else { return }
+        guard let openWindow = openWindow, let dismissWindow = dismissWindow else { return }
         
         // Check if we can open this window
         if let state = sceneStates[scene] {
@@ -249,6 +249,8 @@ import OSLog
             case .closed, .closing:
                 Logger.scenesManager.info("Opening window for scene \(scene.rawValue) with state opening")
                 sceneStates[scene] = .opening
+                // Dismiss the scene if it is already open. This is a hack because in some cases we might not receive the current state of a scene.
+                dismissWindow(id: scene.rawValue)
                 openWindow(id: scene.rawValue)
             case .opening, .opened:
                 Logger.scenesManager.info("Window for scene \(scene.rawValue) is already open or opening")
@@ -256,6 +258,8 @@ import OSLog
         } else {
             Logger.scenesManager.info("First time tracking window for scene \(scene.rawValue) with state opening")
             sceneStates[scene] = .opening
+            // Dismiss the scene if it is already open. This is a hack because in some cases we might not receive the current state of a scene.
+            dismissWindow(id: scene.rawValue)
             openWindow(id: scene.rawValue)
         }
     }
