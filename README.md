@@ -25,7 +25,6 @@ dependencies: [
     .package(url: "https://github.com/Tab-To-Tap/ScenesManager.git", from: "1.0.0")
 ]
 ```
-
 ## Quick Start
 
 1. Set up the ScenesManager in your main app scene:
@@ -130,6 +129,9 @@ ImmersiveSpace(id: SceneId.immersiveSpace.rawValue) {
 ```
 
 ## Usage
+
+### Example
+A full project is available at [ScenesManager-Example](https://github.com/Tab-To-Tap/ScenesManager-Example)
 
 ### Managing Windows
 
